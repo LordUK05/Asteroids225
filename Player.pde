@@ -28,7 +28,7 @@ void Player() {
   // Rotate shape dependent on mouse pos
   float angle = atan2(distY, distX);
   rotate(angle+radians(90));
-  shape(Player);  // draw shape
+  shape(Player, 0, -20);  // draw shape
 
   // Attempt to reallign grid and unrotate canvas
   rotate(-angle-radians(90));

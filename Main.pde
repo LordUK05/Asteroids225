@@ -19,9 +19,12 @@ void mouse() {
   fill(255);
   textSize(15);
   text(mouseX+" , "+mouseY, 100, 50);
+  text("W: "+up+" A: "+left+" S: "+down+" D: "+right, 200,100);
+  text("Pos: "+playerPos[0]+" "+playerPos[1]+"\nSpd(X,Y): "+speed[0]+" "+speed[1], 200,200);
 }
 
 void draw() {
+  movement();
   background(0);
   SceneHandler();
   //Player();
