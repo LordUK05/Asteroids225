@@ -12,7 +12,7 @@ void SceneHandler() {
     textAlign(3);
     text("By:\nWill Price - 2025", 400, 190);
     fill(0);
-    rect(200, 400, 400, 100);#
+    rect(200, 400, 400, 100);
     fill(255);
     textSize(70);
     if (mouseX>200 && mouseX<600 && mouseY>400 && mouseY<500){
@@ -25,6 +25,9 @@ void SceneHandler() {
     //fill(255);
     //text("PLAY", 400, 475);
   } else if (isTitle == false && isEndscreen == false){
-     Player(); 
+    Player(); 
+    fill(255);
+    stroke(255);
+
   }
 }
