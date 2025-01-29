@@ -8,25 +8,35 @@ boolean right = false;
 int[] playerPos = {0, 0};
 int[] speed = {0, 0};
 int movementSpeed = 5;
-
+// Check if menu element has been clicked
 void mouseClicked() {
   if (isTitle) {
-    if (mouseX>200 && mouseX<600 && mouseY>400 && mouseY<500) {
+    if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+    } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
+      isTitle = false;
+      isSettings = true;
+    } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
+      exit();
     }
   }
 }
-
+// Check if mouse is dragged (Makes menus feel more responsive)
 void mouseDragged() {
   if (isTitle) {
-    if (mouseX>200 && mouseX<600 && mouseY>400 && mouseY<500) {
+    if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+    } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
+      isTitle = false;
+      isSettings = true;
+    } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
+      exit();
     }
   }
 }
-
+// Movement handling, checks if its in the correct scene
 void keyPressed() {
   if (isGame) {
     switch (keyCode) {
@@ -46,7 +56,7 @@ void keyPressed() {
   }
 }
 
-
+// Checks if key is released to reset movement boolean
 void keyReleased() {
   if (isGame) {
     switch (keyCode) {
@@ -65,7 +75,7 @@ void keyReleased() {
     }
   }
 }
-
+// Handles all movement, with smoothing
 void movement() {
   // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary
   if (left && right) {
@@ -113,7 +123,7 @@ void movement() {
       speed[1] = max(speed[1]-1, 0);
     }
   }
-  
+
   // Position calculation (To know where the player loaded at the start of the scene)
   playerPos[0] -= speed[0];
   playerPos[1] -= speed[1];
