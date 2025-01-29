@@ -37,6 +37,7 @@ void title() {
 void game() {
   fill(255);
   stroke(255);
+  Enemies();
   Player();
   fill(255);
   stroke(255);

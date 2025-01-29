@@ -67,21 +67,54 @@ void keyReleased() {
 }
 
 void movement() {
+  // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary
   if (left && right) {
-    if (speed[0]==0){
-    } else if (speed[0]<0){
-       speed[0] = min(speed[0]+1, 0); 
-    } else if (speed[0]>0){
-    }  speed[0] = max(speed[0]-1, 0);
-  } else if (left) {
-    speed[0] = max(speed[0]-1, -movementSpeed);
-  } else if (right) {
-    speed[0] = min(speed[0]+1, movementSpeed);
-  } else if (!left) {                          // Needs edge cases for where left is released and right is released snapping to zero
-    speed[0] = min(speed[0]+1, 0);
-  } else if (!right)
-    speed[0] = max(speed[0]-1, 0);
-
-  if (up && down) {
+    if (speed[0]==0) {
+    } else if (speed[0]<0) {
+      speed[0] = min(speed[0]+1, 0);
+    } else if (speed[0]>0) {
+      speed[0] = max(speed[0]-1, 0);
+    }
   }
+  if (left) {
+    speed[0] = max(speed[0]-1, -movementSpeed);
+  }
+  if (right) {
+    speed[0] = min(speed[0]+1, movementSpeed);
+  }
+  if (!left && !right) {
+    if (speed[0]==0) {
+    } else if (speed[0]<0) {
+      speed[0] = min(speed[0]+1, 0);
+    } else if (speed[0]>0) {
+      speed[0] = max(speed[0]-1, 0);
+    }
+  }
+  // Up and down movement (the exact same as the left and right, but with diff var names)
+  if (up && down) {
+    if (speed[1]==0) {
+    } else if (speed[1]<0) {
+      speed[1] = min(speed[1]+1, 0);
+    } else if (speed[1]>0) {
+      speed[1] = max(speed[1]-1, 0);
+    }
+  }
+  if (up) {
+    speed[1] = max(speed[1]-1, -movementSpeed);
+  }
+  if (down) {
+    speed[1] = min(speed[1]+1, movementSpeed);
+  }
+  if (!down && !up) {
+    if (speed[1]==0) {
+    } else if (speed[1]<0) {
+      speed[1] = min(speed[1]+1, 0);
+    } else if (speed[1]>0) {
+      speed[1] = max(speed[1]-1, 0);
+    }
+  }
+  
+  // Position calculation (To know where the player loaded at the start of the scene)
+  playerPos[0] -= speed[0];
+  playerPos[1] -= speed[1];
 }

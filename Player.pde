@@ -5,7 +5,6 @@ void Player() {
   fill(255);
   stroke(255);
   textSize(20);
-  background(0);
 
   // Figure out distance from mouse pos to centre
   float distX = mouseX-width/2;
@@ -28,7 +27,7 @@ void Player() {
   // Rotate shape dependent on mouse pos
   float angle = atan2(distY, distX);
   rotate(angle+radians(90));
-  shape(Player, 0, -20);  // draw shape
+  shape(Player, 0, -25);  // draw shape
 
   // Attempt to reallign grid and unrotate canvas
   rotate(-angle-radians(90));
