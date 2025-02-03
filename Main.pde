@@ -11,12 +11,10 @@
 // PRIORITY 1: (Would be cool to have)
 // Settings
 // Hover text
-// Scaling for fullscreen and or windowed
 
 PFont gameFont;
 
 void setup() {
-  print(width,height);
   frameRate(60);
   size(800, 800);
   gameFont = createFont("GameFont.ttf", 64);

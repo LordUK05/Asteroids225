@@ -24,7 +24,7 @@ void Player() {
   // Move shape to center using translation matrix
   translate(width/2, height/2);
   stroke(0,255,0);
-  fill(0);
+  fill(0,0,0,0);
   square(0,0,40);
   // Rotate shape dependent on mouse pos
   float angle = atan2(distY, distX);
