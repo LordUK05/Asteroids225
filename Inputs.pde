@@ -77,7 +77,7 @@ void keyReleased() {
 }
 // Handles all movement, with smoothing
 void movement() {
-  // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary
+  // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary // frameCount %% X (e.g. 10)
   if (left && right) {
     if (speed[0]==0) {
     } else if (speed[0]<0) {
@@ -86,10 +86,10 @@ void movement() {
       speed[0] = max(speed[0]-1, 0);
     }
   }
-  if (left) {
+  if (left && (frameCount % 5 == 0)) {
     speed[0] = max(speed[0]-1, -movementSpeed);
   }
-  if (right) {
+  if (right && (frameCount % 5 == 0)) {
     speed[0] = min(speed[0]+1, movementSpeed);
   }
   if (!left && !right) {
@@ -109,10 +109,10 @@ void movement() {
       speed[1] = max(speed[1]-1, 0);
     }
   }
-  if (up) {
+  if (up && (frameCount % 5 == 0)) {
     speed[1] = max(speed[1]-1, -movementSpeed);
   }
-  if (down) {
+  if (down && (frameCount % 5 == 0)) {
     speed[1] = min(speed[1]+1, movementSpeed);
   }
   if (!down && !up) {

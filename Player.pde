@@ -12,14 +12,10 @@ void Player() {
   float len = sqrt(distX*distX+distY*distY);
   float lineLen = 40;
 
-  // Clamp values to make sure line doesnt exceed 30PX in length
-  if (len<lineLen) {
-    distX = (distX/len)*lineLen;
-    distY = (distY/len)*lineLen;
-  } else if (len>lineLen) {
-    distX = (distX/len)*lineLen;
-    distY = (distY/len)*lineLen;
-  }
+  // Clamp values to make sure line doesnt exceed 30PX in length (this is used to make sure the player will be drawn in the correct location and not contort)
+  distX = (distX/len)*lineLen;
+  distY = (distY/len)*lineLen;
+
 
   // Move shape to center using translation matrix
   translate(width/2, height/2);
@@ -32,8 +28,8 @@ void Player() {
   shape(Player, 0, -20);  // draw shape
 
   // Attempt to reallign grid and unrotate canvas
-  rotate(-angle-radians(90));
-  popMatrix();
+  rotate(-angle-radians(90)); // Have to add 90DEG as otherwise its not pointing at the mouse
+  popMatrix(); // Return canvas to normal
 
   // Set fill
   fill(255);
