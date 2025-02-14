@@ -2,8 +2,8 @@ PShape Player;
 
 void Player() {
   pushMatrix();
-  fill(255);
-  stroke(255);
+  Player.setFill(0);
+  Player.setStroke(255);
   textSize(20);
 
   // Figure out distance from mouse pos to centre
