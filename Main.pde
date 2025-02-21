@@ -1,18 +1,21 @@
 // SCOPE
 // PRIORITY 0: (Most important)
 // Movement   COMPLETE
-// Player     COMPLETE
+// Player     COMPLETE // ADD BULLETS WITH CLASS
 // Environment
 // Proper enemies - Initial size, duplication like with slimes, movement velocity
-// Projectiles - Ammo, cooldowns
-// Deaths / Enemy duplication
+// Projectiles - Ammo, cooldowns // USE A CLASS
+// Deaths / Enemy duplication // ENEMY CLASS
 // End screen
 // Scoring
 // PRIORITY 1: (Would be cool to have)
 // Settings
 // Hover text
 
+// ArrayList<class> VARNAME = new ArrayList<class>();
+
 PFont gameFont;
+
 
 void setup() {
   frameRate(60);
@@ -45,8 +48,6 @@ void setup() {
   Enemy.endShape(CLOSE);
 }
 
-
-
 void debug() {     // REMOVE BEFORE SUBMISSION
   fill(0,255,0);
   textSize(15);
@@ -60,4 +61,7 @@ void draw() {
   background(0);
   SceneHandler();
   debug();
+  for (bullet updateframe : bullets){
+    updateframe.update();
+  }
 }

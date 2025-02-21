@@ -5,7 +5,7 @@ boolean down = false;
 boolean left = false;
 boolean right = false;
 
-int[] playerPos = {0, 0};
+int[] playerPos = {400, 400};
 int[] speed = {0, 0};
 int movementSpeed = 5;
 // Check if menu element has been clicked
@@ -20,6 +20,8 @@ void mouseClicked() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
+  } else if (isGame){
+    bullets.add(new bullet(playerPos[0],playerPos[1],5,5));
   }
 }
 // Check if mouse is dragged (Makes menus feel more responsive)
@@ -125,6 +127,6 @@ void movement() {
   }
 
   // Position calculation (To know where the player loaded at the start of the scene)
-  playerPos[0] -= speed[0];
-  playerPos[1] -= speed[1];
+  playerPos[0] += speed[0];
+  playerPos[1] += speed[1];
 }

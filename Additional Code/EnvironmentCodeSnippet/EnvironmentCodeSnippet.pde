@@ -4,7 +4,7 @@ void setup(){
 }
 
 boolean running = true;
-int XPos = 250;
+int XPos = 964;
 int YPos = -150;
 int size = 0;
 int lastSize = 0;
@@ -15,13 +15,13 @@ void draw(){
   while (running){
     counter += 1;
     lastSize = size;
-    size = int(random(60,100));
+    size = int(random(60,100)); 
     while(size % 2 == 1){
       size = int(random(60,100));
     }
-    XPos = 200-(size/2);
-    YPos += (0.5*lastSize)+(0.5*size);
-    XPos = XPos+800;
+    YPos = 200-(size/2);
+    XPos += (0.5*lastSize)+(0.5*size);
+    //XPos = XPos+800;
     print(XPos+",");
     print(YPos+",");
     print(size+",");
@@ -30,8 +30,8 @@ void draw(){
     if(counter>13){
      running = false; 
     }
-    XPos = 200;
+    //XPos = 200;
   }
  noLoop(); 
- exit();
+ //exit();
 }

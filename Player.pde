@@ -16,7 +16,6 @@ void Player() {
   distX = (distX/len)*lineLen;
   distY = (distY/len)*lineLen;
 
-
   // Move shape to center using translation matrix
   translate(width/2, height/2);
   stroke(0,255,0);
@@ -34,4 +33,25 @@ void Player() {
   // Set fill
   fill(255);
   stroke(255);
+}
+
+// CLASS FOR BULLETS
+// Spending most of W4 getting familiar with how classess work in processing
+ArrayList<bullet> bullets = new ArrayList<bullet>();
+class bullet {
+  float[] position = new float[2];
+  float XVel,YVel;
+  
+  bullet (float startingX, float startingY, float XV, float YV) {
+    XVel = XV;
+    YVel = YV;
+    position = append(position, startingX);
+    position = append(position, startingY);
+  }
+  
+  void update(){
+    print("");
+    circle(position[0],position[1],30);
+  }
+  
 }
