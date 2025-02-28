@@ -12,15 +12,34 @@
 // Settings
 // Hover text
 
-// ArrayList<class> VARNAME = new ArrayList<class>();
+// BUGS:
+// Dragging play causes a bullet to fire as im using clicked and released functions
+// Bullets follow the player in screenspace
+// Ask adam about bullet.shouldKill
+// Ask adam about bullets following player
+
+// Assign classes to enemies and figure out mitosis
+
+// ArrayList<class> VARNAME = new ArrayList<class>(); <- Used
 
 PFont gameFont;
-
+boolean debug = true;
+PShape backButton;
 
 void setup() {
   frameRate(60);
   size(800, 800);
   gameFont = createFont("GameFont.ttf", 64);
+  // Make the back button
+  backButton = createShape();
+  backButton.beginShape();
+  backButton.vertex(121,13);
+  backButton.vertex(144,30);
+  backButton.vertex(55,100);
+  backButton.vertex(144,170);
+  backButton.vertex(121,190);
+  backButton.vertex(12,100);
+  backButton.endShape(CLOSE);
   // Declare player
   Player = createShape();
   Player.beginShape();
@@ -46,9 +65,10 @@ void setup() {
   Enemy.vertex(15,50);
   Enemy.vertex(0,24);
   Enemy.endShape(CLOSE);
+
 }
 
-void debug() {     // REMOVE BEFORE SUBMISSION
+void debug() {     // Add buttons to enable / disable this in settings
   fill(0,255,0);
   textSize(15);
   text(mouseX+" , "+mouseY, 100, 50);
@@ -61,7 +81,14 @@ void draw() {
   background(0);
   SceneHandler();
   debug();
-  for (bullet updateframe : bullets){
-    updateframe.update();
+  for (bullet bulletshell : bullets){
+    bulletshell.update();
   }
+  //for (int i = 0; i>bullets.length; i++){
+  //  boolean bulletshell = bullet.shouldKill();
+  //  if (bullet.shouldKill() = true){
+  //    bullets.remove(i);
+  //  } 
+  //}
+  
 }

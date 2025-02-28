@@ -4,7 +4,7 @@ boolean up = false;
 boolean down = false;
 boolean left = false;
 boolean right = false;
-
+boolean fire = false;
 int[] playerPos = {400, 400};
 int[] speed = {0, 0};
 int movementSpeed = 5;
@@ -20,8 +20,14 @@ void mouseClicked() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
-  } else if (isGame){
-    bullets.add(new bullet(playerPos[0],playerPos[1],5,5));
+  } else if (isGame) {
+    bullets.add(new bullet());
+  }
+}
+
+void mouseReleased() {
+  if (isGame){
+    fire = false;
   }
 }
 // Check if mouse is dragged (Makes menus feel more responsive)
@@ -36,6 +42,9 @@ void mouseDragged() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
+  } else if (isGame&&!fire) {
+    bullets.add(new bullet());
+    fire = true;
   }
 }
 // Movement handling, checks if its in the correct scene

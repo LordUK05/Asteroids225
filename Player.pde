@@ -39,19 +39,33 @@ void Player() {
 // Spending most of W4 getting familiar with how classess work in processing
 ArrayList<bullet> bullets = new ArrayList<bullet>();
 class bullet {
-  float[] position = new float[2];
-  float XVel,YVel;
-  
-  bullet (float startingX, float startingY, float XV, float YV) {
-    XVel = XV;
-    YVel = YV;
-    position = append(position, startingX);
-    position = append(position, startingY);
+  // Declare class variables
+  PVector position = new PVector(0,0);
+  boolean kill;
+  PVector velocity = new PVector(0,0);
+  PVector target = new PVector(0,0);
+  PVector difference;
+  //float startingX, float startingY, float XV, float YV
+  bullet () {
+    // Declare how the variables are assigned when new object is created
+    velocity.set(random(-3,3),random(-3,-3));
+    position.set(400,400);
+    target.set(mouseX,mouseY); 
+    difference = PVector.sub(target, position); // Calculate difference between 
+    difference.setMag(12);
   }
   
   void update(){
-    print("");
-    circle(position[0],position[1],30);
+    position.add(difference); //????? Follows player
+    circle(position.x,position.y,30);
+  }
+  
+  boolean shouldKill(){ // Ask adam how to call this, the documentation has NOTHING
+   boolean kill = false;
+    if (position.x>-100 || position.x<1200 || position.y>-100 || position.y<1200){
+      kill = true;
+    } 
+    return kill;
   }
   
 }
