@@ -42,30 +42,35 @@ class bullet {
   // Declare class variables
   PVector position = new PVector(0,0);
   boolean kill;
-  PVector velocity = new PVector(0,0);
   PVector target = new PVector(0,0);
   PVector difference;
+  long lifeStart; // This will determine when to kill the particle
   //float startingX, float startingY, float XV, float YV
   bullet () {
     // Declare how the variables are assigned when new object is created
-    velocity.set(random(-3,3),random(-3,-3));
     position.set(400,400);
     target.set(mouseX,mouseY); 
     difference = PVector.sub(target, position); // Calculate difference between 
     difference.setMag(12);
+    lifeStart = System.nanoTime();
   }
   
   void update(){
     position.add(difference); //????? Follows player
-    circle(position.x,position.y,30);
+    
+    circle(position.x,position.y,3);
   }
   
   boolean shouldKill(){ // Ask adam how to call this, the documentation has NOTHING
    boolean kill = false;
-    if (position.x>-100 || position.x<1200 || position.y>-100 || position.y<1200){
-      kill = true;
+    if (System.nanoTime()-lifeStart>2000000000){
+     println("Projectile LifeTime: "+str(lifeStart-System.nanoTime()));
+     kill = true;
     } 
-    return kill;
+  return kill;
   }
   
+  PVector position(){
+   return position;  
+  }
 }

@@ -84,6 +84,13 @@ void draw() {
   for (bullet bulletshell : bullets){
     bulletshell.update();
   }
+  for (int i = 0; i<bullets.size(); i++){
+    bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access
+    println(bulletshell.position());
+    if (bulletshell.shouldKill()){
+      bullets.remove(i);
+    }
+  }
   //for (int i = 0; i>bullets.length; i++){
   //  boolean bulletshell = bullet.shouldKill();
   //  if (bullet.shouldKill() = true){

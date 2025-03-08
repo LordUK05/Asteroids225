@@ -5,8 +5,11 @@ boolean down = false;
 boolean left = false;
 boolean right = false;
 boolean fire = false;
+long lastFireTime = 0;
 int[] playerPos = {400, 400};
 int[] speed = {0, 0};
+PVector pvSpeedx = new PVector(0,0);
+PVector pvSpeedy = new PVector(0,0);
 int movementSpeed = 5;
 // Check if menu element has been clicked
 void mouseClicked() {
@@ -20,8 +23,9 @@ void mouseClicked() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
-  } else if (isGame) {
+  } else if (isGame && System.nanoTime()-lastFireTime > 150000000) {
     bullets.add(new bullet());
+    lastFireTime = System.nanoTime();
   }
 }
 
@@ -45,6 +49,7 @@ void mouseDragged() {
   } else if (isGame&&!fire) {
     bullets.add(new bullet());
     fire = true;
+    lastFireTime = System.nanoTime();
   }
 }
 // Movement handling, checks if its in the correct scene
@@ -133,6 +138,8 @@ void movement() {
     } else if (speed[1]>0) {
       speed[1] = max(speed[1]-1, 0);
     }
+   pvSpeedx.x = speed[0]; 
+   pvSpeedy.y = speed[1];
   }
 
   // Position calculation (To know where the player loaded at the start of the scene)
