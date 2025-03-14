@@ -38,7 +38,7 @@ void Player() {
 // CLASS FOR BULLETS
 // Spending most of W4 getting familiar with how classess work in processing
 ArrayList<bullet> bullets = new ArrayList<bullet>();
-class bullet {
+class bullet { // The reason bullets follow player is because target is screenspace, and changing it to worldspace would mean recalculating every frame which means bullets stopping midair
   // Declare class variables
   PVector position = new PVector(0,0);
   boolean kill;
@@ -48,17 +48,17 @@ class bullet {
   //float startingX, float startingY, float XV, float YV
   bullet () {
     // Declare how the variables are assigned when new object is created
-    position.set(400,400);
-    target.set(mouseX,mouseY); 
+    position.set(400,400); // Screenspace
+    target.set(mouseX,mouseY);
+    lifeStart = System.nanoTime();
     difference = PVector.sub(target, position); // Calculate difference between 
     difference.setMag(12);
-    lifeStart = System.nanoTime();
   }
   
   void update(){
     position.add(difference); //????? Follows player
-    
     circle(position.x,position.y,3);
+    //square(target.x,target.y,5);
   }
   
   boolean shouldKill(){ // Ask adam how to call this, the documentation has NOTHING

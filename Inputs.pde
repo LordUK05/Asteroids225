@@ -17,6 +17,7 @@ void mouseClicked() {
     if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+      startAllEnemies();
     } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
       isTitle = false;
       isSettings = true;
@@ -40,6 +41,7 @@ void mouseDragged() {
     if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+      startAllEnemies();
     } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
       isTitle = false;
       isSettings = true;
@@ -94,22 +96,22 @@ void keyReleased() {
 // Handles all movement, with smoothing
 void movement() {
   // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary // frameCount %% X (e.g. 10)
-  if (left && right) {
-    if (speed[0]==0) {
-    } else if (speed[0]<0) {
+  if (left && right) { // Lerps movement to 0,0 as Left and Right Cancel
+    if (speed[0]==0) { // Dont do anything if theres no speed 
+    } else if (speed[0]<0) { // Else lerp accordingly
       speed[0] = min(speed[0]+1, 0);
     } else if (speed[0]>0) {
       speed[0] = max(speed[0]-1, 0);
     }
   }
-  if (left && (frameCount % 5 == 0)) {
+  if (left && (frameCount % 5 == 0)) { // Allows player movement only on specific frames to make it slower
     speed[0] = max(speed[0]-1, -movementSpeed);
   }
-  if (right && (frameCount % 5 == 0)) {
+  if (right && (frameCount % 5 == 0)) { // Same thing but for the other direction
     speed[0] = min(speed[0]+1, movementSpeed);
   }
-  if (!left && !right) {
-    if (speed[0]==0) {
+  if (!left && !right) { // Stop moving the player 
+    if (speed[0]==0) { 
     } else if (speed[0]<0) {
       speed[0] = min(speed[0]+1, 0);
     } else if (speed[0]>0) {
@@ -117,7 +119,7 @@ void movement() {
     }
   }
   // Up and down movement (the exact same as the left and right, but with diff var names)
-  if (up && down) {
+  if (up && down) { 
     if (speed[1]==0) {
     } else if (speed[1]<0) {
       speed[1] = min(speed[1]+1, 0);
@@ -128,7 +130,7 @@ void movement() {
   if (up && (frameCount % 5 == 0)) {
     speed[1] = max(speed[1]-1, -movementSpeed);
   }
-  if (down && (frameCount % 5 == 0)) {
+  if (down && (frameCount % 5 == 0)) { // Dont allow player to leave map
     speed[1] = min(speed[1]+1, movementSpeed);
   }
   if (!down && !up) {

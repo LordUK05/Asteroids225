@@ -91,11 +91,7 @@ void draw() {
       bullets.remove(i);
     }
   }
-  //for (int i = 0; i>bullets.length; i++){
-  //  boolean bulletshell = bullet.shouldKill();
-  //  if (bullet.shouldKill() = true){
-  //    bullets.remove(i);
-  //  } 
-  //}
-  
+  for (enemy enemyShell : enemies){
+    enemyShell.update();
+  }
 }
