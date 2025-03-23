@@ -1,10 +1,10 @@
 // SCOPE
 // PRIORITY 0: (Most important)
 // Movement   COMPLETE
-// Player     COMPLETE // ADD BULLETS WITH CLASS
-// Environment
+// Player     COMPLETE // Maybe make class?
+// Environment COMPLETE
 // Proper enemies - Initial size, duplication like with slimes, movement velocity
-// Projectiles - Ammo, cooldowns // USE A CLASS
+// Projectiles // USE A CLASS    COMPLETE
 // Deaths / Enemy duplication // ENEMY CLASS
 // End screen
 // Scoring
@@ -81,17 +81,4 @@ void draw() {
   background(0);
   SceneHandler();
   debug();
-  for (bullet bulletshell : bullets){
-    bulletshell.update();
-  }
-  for (int i = 0; i<bullets.size(); i++){
-    bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access
-    println(bulletshell.position());
-    if (bulletshell.shouldKill()){
-      bullets.remove(i);
-    }
-  }
-  for (enemy enemyShell : enemies){
-    enemyShell.update();
-  }
 }

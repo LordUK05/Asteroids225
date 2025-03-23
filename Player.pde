@@ -35,6 +35,20 @@ void Player() {
   stroke(255);
 }
 
+// Void for updaing bullets to clear up the Draw block
+void UpdateBullets(){
+  stroke(255);
+  for (bullet bulletshell : bullets){
+    bulletshell.update();
+  }
+  for (int i = 0; i<bullets.size(); i++){
+    bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access
+    println(bulletshell.position());
+    if (bulletshell.shouldKill()){
+      bullets.remove(i);
+    }
+  }
+}
 // CLASS FOR BULLETS
 // Spending most of W4 getting familiar with how classess work in processing
 ArrayList<bullet> bullets = new ArrayList<bullet>();
@@ -45,19 +59,24 @@ class bullet { // The reason bullets follow player is because target is screensp
   PVector target = new PVector(0,0);
   PVector difference;
   long lifeStart; // This will determine when to kill the particle
+  PVector startPos = new PVector(0,0); // PlayerPos on start
   //float startingX, float startingY, float XV, float YV
-  bullet () {
+  bullet (int[] playerPos) {
     // Declare how the variables are assigned when new object is created
     position.set(400,400); // Screenspace
     target.set(mouseX,mouseY);
     lifeStart = System.nanoTime();
     difference = PVector.sub(target, position); // Calculate difference between 
     difference.setMag(12);
+    startPos.set(playerPos[0],playerPos[1]);
   }
   
   void update(){
     position.add(difference); //????? Follows player
+    stroke(255);
     circle(position.x,position.y,3);
+    stroke(255,0,0);
+    circle(position.x+(startPos.x-playerPos[0]),position.y+(startPos.y-playerPos[1]),4); // get adam to check
     //square(target.x,target.y,5);
   }
   

@@ -24,8 +24,8 @@ void mouseClicked() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
-  } else if (isGame && System.nanoTime()-lastFireTime > 150000000) {
-    bullets.add(new bullet());
+  } else if (isGame && !fire && System.nanoTime()-lastFireTime > 150000000) {
+    bullets.add(new bullet(playerPos));
     lastFireTime = System.nanoTime();
   }
 }
@@ -48,8 +48,8 @@ void mouseDragged() {
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
-  } else if (isGame&&!fire) {
-    bullets.add(new bullet());
+  } else if (isGame && !fire && System.nanoTime()-lastFireTime > 150000000) {
+    bullets.add(new bullet(playerPos));
     fire = true;
     lastFireTime = System.nanoTime();
   }
@@ -130,7 +130,7 @@ void movement() {
   if (up && (frameCount % 5 == 0)) {
     speed[1] = max(speed[1]-1, -movementSpeed);
   }
-  if (down && (frameCount % 5 == 0)) { // Dont allow player to leave map
+  if (down && (frameCount % 5 == 0)) {
     speed[1] = min(speed[1]+1, movementSpeed);
   }
   if (!down && !up) {
@@ -145,6 +145,10 @@ void movement() {
   }
 
   // Position calculation (To know where the player loaded at the start of the scene)
+  //if (playerPos[0]>-20){
+  //  playerPos[0] = max(playerPos[0]+speed[0],0);
+  //} 
   playerPos[0] += speed[0];
   playerPos[1] += speed[1];
+  
 }
