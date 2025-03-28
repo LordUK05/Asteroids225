@@ -74,9 +74,9 @@ class bullet { // The reason bullets follow player is because target is screensp
   void update(){
     position.add(difference); //????? Follows player
     stroke(255);
+    text(position.x+" "+position.y,position.x,position.y);
     circle(position.x,position.y,3);
-    stroke(255,0,0);
-    circle(position.x+(startPos.x-playerPos[0]),position.y+(startPos.y-playerPos[1]),4); // get adam to check
+    textSize(12);
     //square(target.x,target.y,5);
   }
   

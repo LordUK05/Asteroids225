@@ -2,7 +2,7 @@ boolean isTitle = true;
 boolean isEndscreen = false;
 boolean isGame = false;
 boolean isSettings = false;
-
+PrintWriter optionsFile;
 void SceneHandler() {
   textFont(gameFont);
   if (isTitle) {
@@ -103,7 +103,7 @@ void setting() {
   if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
     stroke(255,0,255);
     square(75, 75, 50);
-    shape(backButton, 50, 50, 50, 50);
+    shape(purpleBackButton, 50, 50, 50, 50);
   } else {
     stroke(255);
     square(75, 75, 50);
