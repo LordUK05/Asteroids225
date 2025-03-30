@@ -24,6 +24,7 @@ void mouseClicked() {
       isTitle = false;
       isSettings = true;
       optionsFile = createWriter("/data/options.txt");
+      print("OptionsFileLoaded");
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
@@ -34,10 +35,14 @@ void mouseClicked() {
     if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
       isSettings = false;
       isTitle = true;
-      optionsFile.println("NULL");
+      optionsFile.println(debug);
       optionsFile.flush();
+      println("OptionsFile Flushed");
       optionsFile.close();
-    } else if (true);
+      println("OptionsFile Closed");
+    } else if (mouseX>200 && mouseX<600 && mouseY>150 && mouseY<250){
+      debug = !debug;
+    }
     
   }
 }
@@ -57,6 +62,8 @@ void mouseDragged() {
     } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
       isTitle = false;
       isSettings = true;
+      optionsFile = createWriter("/data/options.txt");
+      print("OptionsFileLoaded");
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
@@ -68,7 +75,15 @@ void mouseDragged() {
     if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
       isSettings = false;
       isTitle = true;
+      optionsFile.println(debug);
+      optionsFile.flush();
+      println("OptionsFile Flushed");
+      optionsFile.close();
+      println("OptionsFile Closed");
+    } else if (mouseX>200 && mouseX<600 && mouseY>150 && mouseY<250 && frameCount % 15 == 0){
+      debug = !debug;
     }
+    
   }
 }
 // Movement handling, checks if its in the correct scene

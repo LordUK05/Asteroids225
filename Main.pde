@@ -26,6 +26,7 @@ PFont gameFont;
 boolean debug = true;
 PShape backButton;
 PShape purpleBackButton;
+String[] options;
 // PImage Name;
 // x = loadImage("Name.png")
 // image(name, x, y);
@@ -37,22 +38,22 @@ void setup() {
   // Make the back button
   backButton = createShape();
   backButton.beginShape();
-  backButton.vertex(121,13);
-  backButton.vertex(144,30);
-  backButton.vertex(55,100);
-  backButton.vertex(144,170);
-  backButton.vertex(121,190);
-  backButton.vertex(12,100);
+  backButton.vertex(121, 13);
+  backButton.vertex(144, 30);
+  backButton.vertex(55, 100);
+  backButton.vertex(144, 170);
+  backButton.vertex(121, 190);
+  backButton.vertex(12, 100);
   backButton.endShape(CLOSE);
   purpleBackButton = createShape();
   purpleBackButton.beginShape();
   purpleBackButton.fill(255, 0, 255);
-  purpleBackButton.vertex(121,13);
-  purpleBackButton.vertex(144,30);
-  purpleBackButton.vertex(55,100);
-  purpleBackButton.vertex(144,170);
-  purpleBackButton.vertex(121,190);
-  purpleBackButton.vertex(12,100);
+  purpleBackButton.vertex(121, 13);
+  purpleBackButton.vertex(144, 30);
+  purpleBackButton.vertex(55, 100);
+  purpleBackButton.vertex(144, 170);
+  purpleBackButton.vertex(121, 190);
+  purpleBackButton.vertex(12, 100);
   purpleBackButton.endShape(CLOSE);
   // Declare player
   Player = createShape();
@@ -66,36 +67,52 @@ void setup() {
   // Declare enemy (May add more variants later)
   Enemy = createShape();
   Enemy.beginShape();
-  Enemy.vertex(30,0);
-  Enemy.vertex(47,12);
-  Enemy.vertex(72,0);
-  Enemy.vertex(94,24);
-  Enemy.vertex(68,36);
-  Enemy.vertex(95,60);
-  Enemy.vertex(67,95);
-  Enemy.vertex(36,82);
-  Enemy.vertex(26,94);
-  Enemy.vertex(0,72);
-  Enemy.vertex(15,50);
-  Enemy.vertex(0,24);
+  Enemy.vertex(30, 0);
+  Enemy.vertex(47, 12);
+  Enemy.vertex(72, 0);
+  Enemy.vertex(94, 24);
+  Enemy.vertex(68, 36);
+  Enemy.vertex(95, 60);
+  Enemy.vertex(67, 95);
+  Enemy.vertex(36, 82);
+  Enemy.vertex(26, 94);
+  Enemy.vertex(0, 72);
+  Enemy.vertex(15, 50);
+  Enemy.vertex(0, 24);
   Enemy.endShape(CLOSE);
 
+  // Load Settings
+  try {
+    options = loadStrings("data/options.txt");
+    if (options.length == 0) {
+      debug = false;
+    } else {
+      debug = boolean(options[0]);
+    }
+  }
+  catch (NullPointerException NPE) {
+    NPE.printStackTrace();
+    println("Caught NPE, Dumping and restoring all affected values");
+    debug = false;
+  }
 }
 
 void debug() {     // Add buttons to enable / disable this in settings
-  fill(0,255,0);
+  fill(0, 255, 0);
   textSize(15);
   text(mouseX+" , "+mouseY, 100, 80);
-  text("W: "+up+" A: "+left+" S: "+down+" D: "+right, 200,100);
-  text("Pos: "+playerPos[0]+" "+playerPos[1]+"\nSpd(X,Y): "+speed[0]+" "+speed[1], 100,120);
-  text(enemies+"\n"+bullets,400,20);
-  text("EnemyCount: "+enemies.size()+"\nBulletsCount: "+bullets.size(),100,160);
-  text(str(stuck)+"\n"+stuckPos, 400,450);
+  text("W: "+up+" A: "+left+" S: "+down+" D: "+right, 200, 100);
+  text("Pos: "+playerPos[0]+" "+playerPos[1]+"\nSpd(X,Y): "+speed[0]+" "+speed[1], 100, 120);
+  text(enemies+"\n"+bullets, 400, 20);
+  text("EnemyCount: "+enemies.size()+"\nBulletsCount: "+bullets.size(), 100, 160);
+  text(str(stuck)+"\n"+stuckPos, 400, 450);
 }
 
 void draw() {
   movement();
   background(0);
   SceneHandler();
-  debug();
+  if (debug) {
+    debug();
+  }
 }

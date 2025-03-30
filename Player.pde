@@ -20,7 +20,9 @@ void Player() {
   translate(width/2, height/2);
   stroke(0,255,0);
   fill(0,0,0,0);
-  square(0,0,40);
+  if (debug){
+    square(0,0,40);
+  }
   // Rotate shape dependent on mouse pos
   float angle = atan2(distY, distX);
   rotate(angle+radians(90));
@@ -74,7 +76,6 @@ class bullet { // The reason bullets follow player is because target is screensp
   void update(){
     position.add(difference); //????? Follows player
     stroke(255);
-    text(position.x+" "+position.y,position.x,position.y);
     circle(position.x,position.y,3);
     textSize(12);
     //square(target.x,target.y,5);

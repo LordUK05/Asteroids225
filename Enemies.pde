@@ -1,4 +1,6 @@
 PShape Enemy;
+int enemyCount; // Decides how many enemies to spawn at the start of each round (user decided) \\ NOT IN USE
+int enemyVelocity; // Determines the lower and upper bounds of enemy speed (4 by default), inclusive \\ NOT IN USE
 int[] environmentPos = {0, 0};
 // Technically the environment is an an enemy as it constrains your movement.
 void Environment() {
@@ -13,7 +15,7 @@ void Environment() {
 
 void startAllEnemies() {
   for (int i=0; i<5; i++) {
-    enemies.add(new enemy(-2));
+    enemies.add(new enemy(-1, 0, 0));
   }
 }
 // Void to call interal enemy update function to clear up the draw block
@@ -30,6 +32,7 @@ void UpdateEnemies() {
       if (tmpEnemyPos[0]<tmpBulletPos.x && tmpEnemyPos[1]<tmpBulletPos.y && tmpEnemyPos[0]+100>tmpBulletPos.x && tmpEnemyPos[1]+95>tmpBulletPos.y) { // I hate this, it checks if the bullet is within the bounds of the enemies hitbox
         //text(i+" "+x+"\n"+enemies.get(i),500,500);
         enemies.remove(x);
+        enemies.add(new enemy(0, int(tmpBulletPos.x),int(tmpBulletPos.y)));
         bullets.remove(i);
       }
     }
@@ -42,15 +45,29 @@ class enemy {
   int[] selfPos;
   int[] movementVelocity;
   int state;
+  float selfScale;
 
-  enemy(int parentState) {
+  enemy(int parentState, int parentX, int parentY) {
     // Set fill
     Enemy.setFill(0);
     Enemy.setStroke(255);
     state = parentState+1;
-    selfPos = new int[] {int(random(0, 750)), int(random(0, 750))};
+    if (parentState == -1){
+      selfPos = new int[] {int(random(0, 750)), int(random(0, 750))};
+    } else {
+     selfPos = new int[] {parentX,parentY}; 
+    }
     //movementVelocity = new int[] {int(random(-5,5)),int(random(-5,5))};
-    movementVelocity = new int[] {int(random(-5, 5)), int(random(-5, 5))};
+    movementVelocity = new int[] {int(random(-4, 4)), int(random(-4, 4))};
+    switch (state){
+     case 0:
+       selfScale = 1.0;
+       break;
+     case 1:
+       selfScale = 0.75;
+       break;
+    }
+    Enemy.scale(selfScale);
   }
 
   void update() { // speed[] references players speed, its how im keeping objects "pinned" in world (worldspace)
@@ -71,19 +88,18 @@ class enemy {
       selfPos[0] -= speed[0] + movementVelocity[0];
       selfPos[1] -= movementVelocity[0];
     }
-    // + movementVelocity[0]
-    // + movementVelocity[1]
-    //square(selfPos[0],selfPos[1],60);
-    fill(0, 255, 0);
-    stroke(255);
-    textSize(14);
-    text("SelfPos:"+selfPos[0]+" "+selfPos[1]+"\nVel:"+movementVelocity[0]+" "+movementVelocity[1], selfPos[0], selfPos[1]);
-    circle(selfPos[0], selfPos[1], 3);
+
     shape(Enemy, selfPos[0], selfPos[1]);
-    rectMode(LEFT);
-    fill(0, 0, 0, 0);
-    stroke(0, 255, 0, 255);
-    rect(selfPos[0], selfPos[1], selfPos[0]+100, selfPos[1]+95);
+    if (debug) {
+      fill(0, 255, 0);
+      stroke(255);
+      textSize(14);
+      text("SelfPos:"+selfPos[0]+" "+selfPos[1]+"\nVel:"+movementVelocity[0]+" "+movementVelocity[1], selfPos[0], selfPos[1]);
+      rectMode(LEFT);
+      fill(0, 0, 0, 0);
+      stroke(0, 255, 0, 255);
+      rect(selfPos[0], selfPos[1], selfPos[0]+100, selfPos[1]+95);
+    }
     rectMode(CENTER);
   }
 

@@ -98,10 +98,18 @@ void endscreen() {
 }
 
 void setting() {
+  try {
+    optionsFile = createWriter("/data/options.txt");
+  }
+  catch (NullPointerException e) {
+    print("Failed to load OptionsFile");
+    optionsFile = createWriter("/data/options.txt");
+    print("Forceloaded OptionsFile");
+  }
   background(0);
   fill(0);
   if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
-    stroke(255,0,255);
+    stroke(255, 0, 255);
     square(75, 75, 50);
     shape(purpleBackButton, 50, 50, 50, 50);
   } else {
