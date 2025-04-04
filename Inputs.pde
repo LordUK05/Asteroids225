@@ -102,6 +102,8 @@ void keyPressed() {
     case 68:
       right = true;
       break;
+    case 82:
+      startAllEnemies();
     }
   }
 }

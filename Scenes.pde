@@ -84,7 +84,6 @@ void game() {
   fill(255);
   stroke(255);
   Environment();
-  //Enemies();
   UpdateEnemies();
   UpdateBullets();
   Player();

@@ -84,7 +84,7 @@ class bullet { // The reason bullets follow player is because target is screensp
   boolean shouldKill(){ // Ask adam how to call this, the documentation has NOTHING
    boolean kill = false;
     if (System.nanoTime()-lifeStart>2000000000){
-     println("Projectile LifeTime: "+str(lifeStart-System.nanoTime()));
+     //println("Projectile LifeTime: "+str(lifeStart-System.nanoTime()));
      kill = true;
     } 
   return kill;
