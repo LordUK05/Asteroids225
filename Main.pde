@@ -66,19 +66,7 @@ void setup() {
   Player.endShape(CLOSE);
 
   // Load Settings
-  try {
-    options = loadStrings("data/options.txt");
-    if (options.length == 0) {
-      debug = false;
-    } else {
-      debug = boolean(options[0]);
-    }
-  }
-  catch (NullPointerException NPE) {
-    NPE.printStackTrace();
-    println("Caught NPE, Dumping and restoring all affected values");
-    debug = false;
-  }
+  optionsFile("LOAD");
 }
 
 void debug() {     // Add buttons to enable / disable this in settings

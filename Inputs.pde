@@ -19,12 +19,13 @@ void mouseClicked() {
     if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+      isKillable = false;
+      invincibilityTimer = millis();
       startAllEnemies();
     } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
       isTitle = false;
       isSettings = true;
-      optionsFile = createWriter("/data/options.txt");
-      print("OptionsFileLoaded");
+      optionsFile("CREATEWRITER");
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
@@ -35,15 +36,10 @@ void mouseClicked() {
     if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
       isSettings = false;
       isTitle = true;
-      optionsFile.println(debug);
-      optionsFile.flush();
-      println("OptionsFile Flushed");
-      optionsFile.close();
-      println("OptionsFile Closed");
+      optionsFile("CLOSE");
     } else if (mouseX>200 && mouseX<600 && mouseY>150 && mouseY<250){
       debug = !debug;
     }
-    
   }
 }
 
@@ -58,12 +54,13 @@ void mouseDragged() {
     if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
       isGame = true;
+      isKillable = false;
+      invincibilityTimer = millis();
       startAllEnemies();
     } else if (mouseX>200 && mouseX<600 && mouseY>500 && mouseY<550) {
       isTitle = false;
       isSettings = true;
-      optionsFile = createWriter("/data/options.txt");
-      print("OptionsFileLoaded");
+      optionsFile("CREATEWRITER");
     } else if (mouseX>200 && mouseX<600 && mouseY>650 && mouseY<750) {
       exit();
     }
@@ -75,11 +72,7 @@ void mouseDragged() {
     if (mouseX>50 && mouseX<100 && mouseY>50 && mouseY<100) {
       isSettings = false;
       isTitle = true;
-      optionsFile.println(debug);
-      optionsFile.flush();
-      println("OptionsFile Flushed");
-      optionsFile.close();
-      println("OptionsFile Closed");
+      optionsFile("CLOSE");
     } else if (mouseX>200 && mouseX<600 && mouseY>150 && mouseY<250 && frameCount % 15 == 0){
       debug = !debug;
     }
@@ -102,8 +95,6 @@ void keyPressed() {
     case 68:
       right = true;
       break;
-    case 82:
-      startAllEnemies();
     }
   }
 }
@@ -124,6 +115,23 @@ void keyReleased() {
     case 68:
       right = false;
       break;
+    }
+  }
+}
+
+void mouseWheel(MouseEvent event){ // Used for scrolling options in options scene
+  if (isSettings){
+    if (mouseX>200 && mouseX<600 && mouseY>300 && mouseY<400){
+      float change = event.getCount();
+      enemyCount -= int(change);
+      enemyCount = max(enemyCount, 1);
+      enemyCount = min(enemyCount, 99);
+    }
+    if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550){
+      float change = event.getCount();
+      enemyVelocity -= int(change);
+      enemyVelocity = max(enemyVelocity, 1);
+      enemyVelocity = min(enemyVelocity, 99);
     }
   }
 }

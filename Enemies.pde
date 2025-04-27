@@ -1,8 +1,10 @@
-int enemyCount; // Decides how many enemies to spawn at the start of each round (user decided) \\ NOT IN USE
-int enemyVelocity; // Determines the lower and upper bounds of enemy speed (4 by default), inclusive \\ NOT IN USE
+int enemyCount = 4; // Decides how many enemies to spawn at the start of each round (user decided) \\ NOT IN USE
+int enemyVelocity; // Determines the lower and upper bounds of enemy speed (5 by default), inclusive \\ NOT IN USE
 int[] environmentPos = {0, 0};
+int enemiesKilled = 0;
 // Technically the environment is an an enemy as it constrains your movement.
 void Environment() {
+  fill(255);
   background(0);
   stroke(255, 0, 0);
   fill(0);
@@ -13,7 +15,9 @@ void Environment() {
 
 
 void startAllEnemies() {
-  for (int i=0; i<5; i++) {
+  isKillable = false; // makes it so player cant instantly die
+  invincibilityTimer = millis();
+  for (int i=0; i<enemyCount; i++) {
     enemies.add(new enemy(-1, 0, 0));
   }
 }
@@ -22,34 +26,43 @@ void UpdateEnemies() {
   for (enemy enemyShell : enemies) {
     enemyShell.update();
   }
-  for (int x = 0; x<enemies.size(); x++) { // This is a mess, it goes through each enemy, going through each bullet checking if each bullet is in its hitbox, killing the enemy if it comes out true
+  for (int x = 0; x<enemies.size(); x++) { // This function does 2 things, it loops through every enemy, then every bullet checking if an enemy is hit by a bullet, then it checks if there are any enemies completley out of bounds.
     enemy enemyshell = enemies.get(x);
-    int[] tmpEnemyPos = enemyshell.position();
-    for (int i = 0; i<bullets.size(); i++) {
+    int[] tmpEnemyPos = enemyshell.position();    
+    for (int i = 0; i<bullets.size(); i++) { //This goes through each enemy, then going through each bullet checking if each bullet is in the enemies hitbox, killing the enemy if it comes out true
       bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access
       PVector tmpBulletPos = bulletshell.position();
-      // Check if its a child or adult asteroid, using the correct collision depending.
-      if (enemyshell.selfScale == 1){
+      // Check if its a child or adult asteroid, using the correct collision dection depending.
+      if (enemyshell.selfScale == 1) {
         if (tmpEnemyPos[0]<tmpBulletPos.x && tmpEnemyPos[1]<tmpBulletPos.y && tmpEnemyPos[0]+100>tmpBulletPos.x && tmpEnemyPos[1]+95>tmpBulletPos.y) { // I hate this, it checks if the bullet is within the bounds of the enemies hitbox
-          //text(i+" "+x+"\n"+enemies.get(i),500,500);
+          //text(i+" "+x+"\n"+enemies.get(i),500,500);a
           enemies.remove(x);
-          enemies.add(new enemy(0, int(tmpBulletPos.x),int(tmpBulletPos.y)));
+          enemies.add(new enemy(0, int(tmpBulletPos.x), int(tmpBulletPos.y)));
+          enemies.add(new enemy(0, int(tmpBulletPos.x), int(tmpBulletPos.y)));
           bullets.remove(i); // then delete the enemy
+          enemiesKilled += 1;
         }
-      } else { // If its not an adult enemy
+      } else { // If its not an adult enemy do the same check but for the child's hitbox
         if (tmpEnemyPos[0]<tmpBulletPos.x && tmpEnemyPos[1]<tmpBulletPos.y && tmpEnemyPos[0]+75>tmpBulletPos.x && tmpEnemyPos[1]+70>tmpBulletPos.y) {
           enemies.remove(x);
           bullets.remove(i);
+          enemiesKilled += 1;
         }
       }
     }
+    if (tmpEnemyPos[0] > environmentPos[0]+360 || tmpEnemyPos[0] < environmentPos[0]-460 || tmpEnemyPos[1] < environmentPos[1]-460 || tmpEnemyPos[1] > environmentPos[1]+360){
+      // This logic statement is placed weirdly, due to exectuion flows, but basically it checks if an enemy is fully (>45%~) out of bounds, and cant be saved, it just kills them and makes a new one
+      // This is needed because of a weird initialisation bug where only the first waves of enemies spawns relative to (0,0) instead of (400,400)
+        enemies.remove(x);
+        enemies.add(new enemy(-1, int(random(environmentPos[0]-350, environmentPos[0]+350)), int(random(environmentPos[1]-350, environmentPos[1]+350)) ));
+    }
   }
-  if (enemies.size() == 0){
+  if (enemies.size() == 0) { // If there are no enemies, spawn some
     startAllEnemies();
   }
 }
 
-PShape makeEnemyPS(){
+PShape makeEnemyPS() {
   // Declare enemy (May add more variants later)
   PShape Enemy;
   Enemy = createShape();
@@ -66,7 +79,7 @@ PShape makeEnemyPS(){
   Enemy.vertex(0, 72);
   Enemy.vertex(15, 50);
   Enemy.vertex(0, 24);
-  Enemy.endShape(CLOSE); 
+  Enemy.endShape(CLOSE);
   return Enemy;
 }
 
@@ -78,27 +91,28 @@ class enemy {
   float selfScale;
   PShape Enemy;
   enemy(int parentState, int parentX, int parentY) {
-    // Set fill  
+    // Set fill
     state = parentState+1;
-    switch (state){
-     case 0:
-       selfScale = 1.0;
-       break;
-     case 1:
-       selfScale = 0.75;
-       break;
+    switch (state) {
+    case 0:
+      selfScale = 1.0;
+      break;
+    case 1:
+      selfScale = 0.75;
+      break;
     }
+
     Enemy = makeEnemyPS();
     Enemy.scale(selfScale);
     Enemy.setFill(0);
     Enemy.setStroke(255);
-    if (parentState == -1){
-      selfPos = new int[] {int(random(environmentPos[0], environmentPos[0])), int(random(environmentPos[1], environmentPos[1]+500))};
+    if (parentState == -1) {
+      selfPos = new int[] {int(random(environmentPos[0]-350, environmentPos[0]+350)), int(random(environmentPos[1]-350, environmentPos[1]+350))};
     } else {
-     selfPos = new int[] {parentX,parentY}; 
+      selfPos = new int[] {parentX, parentY};
     }
     //movementVelocity = new int[] {int(random(-5,5)),int(random(-5,5))};
-    movementVelocity = new int[] {int(random(-4, 4)), int(random(-4, 4))};
+    movementVelocity = new int[] {int(random(-enemyVelocity, enemyVelocity)), int(random(-enemyVelocity, enemyVelocity))};
   }
 
   void update() { // speed[] references players speed, its how im keeping objects "pinned" in world (worldspace)
@@ -108,6 +122,8 @@ class enemy {
     if (selfPos[1] < environmentPos[1]-450 || selfPos[1] > environmentPos[1]+350) {
       movementVelocity[1] = -movementVelocity[1];
     }
+
+    // Stuck detection, basically checking if the player is in a position thats "stuck" (on the verge of being out of bounds, stopping the player from moving, stopping enemies by extension so they dont desync)
     if (!stuck) {
       selfPos[0] -= speed[0] + movementVelocity[0];
       selfPos[1] -= speed[1] + movementVelocity[1];
@@ -118,10 +134,10 @@ class enemy {
       selfPos[0] -= speed[0] + movementVelocity[0];
       selfPos[1] -= movementVelocity[0];
     }
-    
-    circle(environmentPos[0]-450,environmentPos[1],10);
-    circle(environmentPos[0]+450,environmentPos[1],10);
-    
+
+    circle(environmentPos[0]-450, environmentPos[1], 10);
+    circle(environmentPos[0]+450, environmentPos[1], 10);
+
     shape(Enemy, selfPos[0], selfPos[1]);
     if (debug) {
       fill(0, 255, 0);
@@ -131,10 +147,10 @@ class enemy {
       rectMode(LEFT);
       fill(0, 0, 0, 0);
       stroke(0, 255, 0, 255);
-      if (selfScale == 1){
+      if (selfScale == 1) {
         rect(selfPos[0], selfPos[1], selfPos[0]+100, selfPos[1]+95);
       } else {
-       rect(selfPos[0], selfPos[1], selfPos[0]+75, selfPos[1]+70); 
+        rect(selfPos[0], selfPos[1], selfPos[0]+75, selfPos[1]+70);
       }
     }
     rectMode(CENTER);
