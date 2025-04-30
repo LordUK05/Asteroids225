@@ -41,6 +41,22 @@ void mouseClicked() {
       debug = !debug;
     }
   }
+  
+  if (isEndscreen){
+   if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550) {
+     print("RESET");
+     up = false; down = false; left = false; right = false; fire = false; stuck = false;
+     speed[0] = 0; speed[1] = 0;
+     playerPos[0] = 400; playerPos[1] = 400;
+     enemiesKilled = 0;
+     score = 0;
+     enemies = new ArrayList<enemy>();
+     isEndscreen = false;
+     isTitle = true;
+   } else if (mouseX>200 && mouseX<600 && mouseY>600 && mouseY<700) {
+     exit(); 
+   }
+  }
 }
 
 void mouseReleased() {
@@ -77,6 +93,22 @@ void mouseDragged() {
       debug = !debug;
     }
     
+  }
+  
+  if (isEndscreen){
+   if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550) {
+     print("RESET");
+     up = false; down = false; left = false; right = false; fire = false; stuck = false;
+     speed[0] = 0; speed[1] = 0;
+     playerPos[0] = 400; playerPos[1] = 400;
+     enemiesKilled = 0;
+     score = 0;
+     enemies = new ArrayList<enemy>();
+     isEndscreen = false;
+     isTitle = true;
+   } else if (mouseX>200 && mouseX<600 && mouseY>600 && mouseY<700) {
+     exit(); 
+   }
   }
 }
 // Movement handling, checks if its in the correct scene

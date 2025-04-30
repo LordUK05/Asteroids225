@@ -3,6 +3,9 @@ boolean isEndscreen = false;
 boolean isGame = false;
 boolean isSettings = false;
 PrintWriter optionsFile;
+boolean highscoreFlag = false;
+String[] highscore;
+PrintWriter highscoreFile;
 void SceneHandler() {
   textFont(gameFont);
   if (isTitle) {
@@ -47,9 +50,9 @@ void optionsFile(String option) {
     println("OptionsFile Flushed");
     optionsFile.close();
     println("OptionsFile Closed");
-  } else if (option == "CREATEWRITER"){
+  } else if (option == "CREATEWRITER") {
     optionsFile = createWriter("/data/options.txt");
-    print("OptionsFileLoaded"); 
+    print("OptionsFileLoaded");
   }
 }
 
@@ -127,9 +130,66 @@ void game() {
   score();
 }
 
+void scoreHandler(String option) {
+  if (option == "LOAD") {
+    highscore = loadStrings("/data/highscore.txt");
+  }
+  if (option == "SAVENCLOSE") {
+    highscoreFile.print(score);
+    print("Saved score");
+    highscoreFile.flush();
+    highscoreFile.close();
+    println("Saved and closed score file");
+    highscoreFlag = true;
+  }
+  if (option == "CREATEWRITER") {
+    highscoreFile = createWriter("/data/highscore.txt");
+  }
+}
+
 void endscreen() {
   background(0);
-  text("GameOver", width/2, 100);
+  fill(255);
+  stroke(255);
+  text("GameOver", width/2, 150);
+  if (highscoreFlag == false && int(highscore[0]) < score) {
+    scoreHandler("CREATEWRITER");
+    scoreHandler("SAVENCLOSE");
+  }
+  if (highscoreFlag) {
+    textSize(30);
+    text("HIGH SCORE!\n"+str(score)+"\n ENEMIES KILLED:\n"+str(enemiesKilled), width/2, 250);
+  } else {
+    textSize(30);
+    text("SCORE:\n"+str(score)+"\nENEMIES KILLED:\n"+str(enemiesKilled), width/2, 250);
+  }
+  textSize(60);
+  if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550) { // Render the correct play button based on mouse pos
+    fill(0);
+    stroke(255, 0, 255);
+    rect(width/2, 500, 400, 100);
+    fill(255, 0, 255);
+    text("MENU", 400, 525);
+  } else {
+    fill(0);
+    stroke(255);
+    rect(width/2, 500, 400, 100);
+    fill(255);
+    text("MENU", 400, 525);
+  }
+  if (mouseX>200 && mouseX<600 && mouseY>600 && mouseY<700) { // Render the correct play button based on mouse pos
+    fill(0);
+    stroke(255, 0, 255);
+    rect(width/2, 650, 400, 100);
+    fill(255, 0, 255);
+    text("QUIT", 400, 675);
+  } else {
+    fill(0);
+    stroke(255);
+    rect(width/2, 650, 400, 100);
+    fill(255);
+    text("QUIT", 400, 675);
+  }
 }
 
 void setting() {

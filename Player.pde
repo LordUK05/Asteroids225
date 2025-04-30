@@ -62,6 +62,7 @@ void Player() {
       if (tmpEnemyPos[0] < 420 && tmpEnemyPos[0] + 100 > 380 && tmpEnemyPos[1] < 420 && tmpEnemyPos[1] + 95 > 380 && isKillable) { // Check if the adult enemy collides with player
         isGame = false;
         isEndscreen = true;
+        scoreHandler("LOAD");
         print("DEAD");
       } 
     }
@@ -69,6 +70,7 @@ void Player() {
        if (tmpEnemyPos[0] < 420 && tmpEnemyPos[0] + 75 > 380 && tmpEnemyPos[1] < 420 && tmpEnemyPos[1] + 70 > 380 && isKillable) { // Check if child enemy collides with player
          isGame = false;
          isEndscreen = true;
+         scoreHandler("LOAD");
        }
      }
     rectMode(CENTER);

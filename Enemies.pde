@@ -135,8 +135,8 @@ class enemy {
       selfPos[1] -= movementVelocity[0];
     }
 
-    circle(environmentPos[0]-450, environmentPos[1], 10);
-    circle(environmentPos[0]+450, environmentPos[1], 10);
+    //circle(environmentPos[0]-450, environmentPos[1], 10);
+    //circle(environmentPos[0]+450, environmentPos[1], 10);
 
     shape(Enemy, selfPos[0], selfPos[1]);
     if (debug) {

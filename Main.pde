@@ -12,12 +12,6 @@
 // Settings
 // Hover text
 
-// BUGS:
-// Dragging play causes a bullet to fire as im using clicked and released functions
-// Bullets follow the player in screenspace
-// Ask adam about bullet.shouldKill
-// Ask adam about bullets following player
-
 // Assign classes to enemies and figure out mitosis
 
 // ArrayList<class> VARNAME = new ArrayList<class>(); <- Used
