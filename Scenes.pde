@@ -6,12 +6,13 @@ PrintWriter optionsFile;
 boolean highscoreFlag = false;
 String[] highscore;
 PrintWriter highscoreFile;
-void SceneHandler() {
+
+// I broke the game into "scenes" similar to how Unity works with scenes, each scene is a void and depending on the above variables it draws only the correct one.
+
+void SceneHandler() { // Determines which scene should be drawn.
   textFont(gameFont);
   if (isTitle) {
     title();
-    //fill(255);
-    //text("PLAY", 400, 475);
   } else if (isGame) {
     game();
   } else if (isEndscreen) {
@@ -56,7 +57,7 @@ void optionsFile(String option) {
   }
 }
 
-void title() {
+void title() { // The title screen.
   stroke(255);
   textAlign(CENTER);
   background(0);
@@ -118,7 +119,7 @@ void title() {
   //rect(width/2, 700, 400, 100);
 }
 
-void game() {
+void game() { // The game scene, it doesnt have much to render as fixed elements so its just a bunch of calling functions in the correct execution order.
   fill(255);
   stroke(255);
   Environment();
@@ -130,7 +131,7 @@ void game() {
   score();
 }
 
-void scoreHandler(String option) {
+void scoreHandler(String option) { // This is responsible for saving the highscore, i didnt do this as well as options file so its not as robust.
   if (option == "LOAD") {
     highscore = loadStrings("/data/highscore.txt");
   }
@@ -147,7 +148,7 @@ void scoreHandler(String option) {
   }
 }
 
-void endscreen() {
+void endscreen() { // The screen you see after the player is killed.
   background(0);
   fill(255);
   stroke(255);
@@ -192,8 +193,8 @@ void endscreen() {
   }
 }
 
-void setting() {
-  try {
+void setting() { // The settings menu.
+  try { // Load the options file so changes made in scene are saved (They are saved on the change back to the title scene)
     optionsFile = createWriter("/data/options.txt");
   }
   catch (NullPointerException e) {

@@ -42,7 +42,7 @@ void mouseClicked() {
     }
   }
   
-  if (isEndscreen){
+  if (isEndscreen){ // CONTROLS FOR THE ENDING SCREEN
    if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550) {
      print("RESET");
      up = false; down = false; left = false; right = false; fire = false; stuck = false;
@@ -59,13 +59,13 @@ void mouseClicked() {
   }
 }
 
-void mouseReleased() {
+void mouseReleased() { // Used only in the game scene to stop mouse dragged from firing multiple bullets.
   if (isGame) {
     fire = false;
   }
 }
 // Check if mouse is dragged (Makes menus feel more responsive)
-void mouseDragged() {
+void mouseDragged() { // Same code as mouseClicked but for the dragged event, moving a single pixel while clicked changes the event to mouseDragged, having this function makes everything "feel" responsive.
   if (isTitle) { // ALL INPUTS BELOW ARE FOR THE TITLE SCREEN
     if (mouseX>200 && mouseX<600 && mouseY>350 && mouseY<450) {
       isTitle = false;
@@ -95,7 +95,7 @@ void mouseDragged() {
     
   }
   
-  if (isEndscreen){
+  if (isEndscreen){ // CONTROLS FOR THE ENDING SCREEN
    if (mouseX>200 && mouseX<600 && mouseY>450 && mouseY<550) {
      print("RESET");
      up = false; down = false; left = false; right = false; fire = false; stuck = false;
@@ -114,7 +114,7 @@ void mouseDragged() {
 // Movement handling, checks if its in the correct scene
 void keyPressed() {
   if (isGame) {
-    switch (keyCode) {
+    switch (keyCode) { // Switch case for key codes for W A S and D
     case 87:
       up = true;
       break;
@@ -134,7 +134,7 @@ void keyPressed() {
 // Checks if key is released to reset movement boolean
 void keyReleased() {
   if (isGame) {
-    switch (keyCode) {
+    switch (keyCode) { // Switch for key codes WASD, this one releases the movement so its not stuck on.
     case 87:
       up = false;
       break;
@@ -168,7 +168,7 @@ void mouseWheel(MouseEvent event){ // Used for scrolling options in options scen
   }
 }
 // Handles all movement, with smoothing
-void movement() {
+void movement() { // I apologise in advance for how unreadble this is, the comments try and explain the thought processes i was having while making it.
   // Left and right movement for the player, im using a method of smoothing so that movement doesnt feel binary // frameCount %% X (e.g. 10)
   // Add conditions for moving being stopped if stuck
   if (left && right) { // Lerps movement to 0,0 as Left and Right Cancel // Any direction && oppositeDirection is done to make sure that the movement cancels out and one doesnt prevail
@@ -251,7 +251,7 @@ void movement() {
     speed[0] = min(speed[1], 0);
   }
 
-  if (playerPos[0]>829) { // Found a bug where the player could escape playable area, so ive implemented this to clamp the player inside
+  if (playerPos[0]>829) { // Found a bug where the player could escape playable area, so ive implemented this to clamp the player inside // Still kinda works? but its not noticable unless you have debugging enabled (top left corner, hold W)
     playerPos[0] = 829;
   } else if (playerPos[0]<-29) {
     playerPos[0] = -29;

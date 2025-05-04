@@ -11,7 +11,7 @@ void score() { // Calculate and render the score. rough score formulae is "score
   text("SCORE: "+score, 120, 120);
 }
 
-void Player() {
+void Player() { // This handles the drawing and rotation of the player.
   pushMatrix();
   Player.setFill(0);
   Player.setStroke(255);
@@ -56,7 +56,7 @@ void Player() {
     text("invincible",420,370);
   }
   
-  for (enemy enemyShell : enemies) {
+  for (enemy enemyShell : enemies) { // This loop checks if the player is colliding with any enemies, killing them if they are.
     int[] tmpEnemyPos = enemyShell.position();
     if (enemyShell.selfScale == 1) { // if adult enemy
       if (tmpEnemyPos[0] < 420 && tmpEnemyPos[0] + 100 > 380 && tmpEnemyPos[1] < 420 && tmpEnemyPos[1] + 95 > 380 && isKillable) { // Check if the adult enemy collides with player
@@ -95,7 +95,7 @@ void UpdateBullets() {
 // CLASS FOR BULLETS
 // Spending most of W4 getting familiar with how classess work in processing
 ArrayList<bullet> bullets = new ArrayList<bullet>();
-class bullet { // The reason bullets follow player is because target is screenspace, and changing it to worldspace would mean recalculating every frame which means bullets stopping midair
+class bullet { // The reason bullets follow player is because target is screenspace, and changing it to worldspace would mean recalculating every frame which means bullets stopping midair, this metho also feels nicer.
   // Declare class variables
   PVector position = new PVector(0, 0);
   boolean kill;
@@ -115,14 +115,14 @@ class bullet { // The reason bullets follow player is because target is screensp
   }
 
   void update() {
-    position.add(difference); //????? Follows player
+    position.add(difference); // Moves the bullet each frame
     stroke(255);
     circle(position.x, position.y, 3);
     textSize(12);
     //square(target.x,target.y,5);
   }
 
-  boolean shouldKill() { // Ask adam how to call this, the documentation has NOTHING
+  boolean shouldKill() { // Sorted out this should kill function, kills the bullet after 2000000000 nanoseconds, why i used nanoseconds idk
     boolean kill = false;
     if (System.nanoTime()-lifeStart>2000000000) {
       //println("Projectile LifeTime: "+str(lifeStart-System.nanoTime()));

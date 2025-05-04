@@ -1,18 +1,18 @@
 // SCOPE
 // PRIORITY 0: (Most important)
-// Movement   COMPLETE
-// Player     COMPLETE // Maybe make class?
-// Environment COMPLETE
-// Proper enemies - Initial size, duplication like with slimes, movement velocity
-// Projectiles // USE A CLASS    COMPLETE
-// Deaths / Enemy duplication // ENEMY CLASS
-// End screen
-// Scoring
+// Movement                                                                           COMPLETE
+// Player                                                                             COMPLETE // Maybe make class?
+// Environment                                                                        COMPLETE
+// Proper enemies - Initial size, duplication like with slimes, movement velocity     COMPLETE
+// Projectiles // USE A CLASS                                                         COMPLETE
+// Deaths / Enemy duplication // ENEMY CLASS                                          COMPLETE
+// End screen                                                                         COMPLETE
+// Scoring                                                                            COMPLETE
 // PRIORITY 1: (Would be cool to have)
-// Settings
-// Hover text
+// Settings                                                                           COMPLETE
+// Hover text OUTSIDE OF SCOPE
 
-// Assign classes to enemies and figure out mitosis
+// Assign classes to enemies and figure out mitosis COMPLETE
 
 // ArrayList<class> VARNAME = new ArrayList<class>(); <- Used
 
@@ -21,9 +21,7 @@ boolean debug = true;
 PShape backButton;
 PShape purpleBackButton;
 String[] options;
-// PImage Name;
-// x = loadImage("Name.png")
-// image(name, x, y);
+
 
 void setup() {
   frameRate(60);
@@ -74,7 +72,7 @@ void debug() {     // Add buttons to enable / disable this in settings
   text(str(stuck)+"\n"+stuckPos, 400, 450);
 }
 
-void draw() {
+void draw() { // The draw block, kept neat for readibility
   movement();
   background(0);
   SceneHandler();

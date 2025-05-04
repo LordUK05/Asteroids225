@@ -16,28 +16,27 @@ void Environment() {
 
 void startAllEnemies() {
   isKillable = false; // makes it so player cant instantly die
-  invincibilityTimer = millis();
-  for (int i=0; i<enemyCount; i++) {
+  invincibilityTimer = millis(); // Starts a timer so player isnt invicible forever
+  for (int i=0; i<enemyCount; i++) { // Adds all enemies to the scene
     enemies.add(new enemy(-1, 0, 0));
   }
 }
 // Void to call interal enemy update function to clear up the draw block
 void UpdateEnemies() {
-  for (enemy enemyShell : enemies) {
+  for (enemy enemyShell : enemies) { // Update each enemy (Position mainly) see Enemy.update
     enemyShell.update();
   }
   for (int x = 0; x<enemies.size(); x++) { // This function does 2 things, it loops through every enemy, then every bullet checking if an enemy is hit by a bullet, then it checks if there are any enemies completley out of bounds.
     enemy enemyshell = enemies.get(x);
     int[] tmpEnemyPos = enemyshell.position();    
     for (int i = 0; i<bullets.size(); i++) { //This goes through each enemy, then going through each bullet checking if each bullet is in the enemies hitbox, killing the enemy if it comes out true
-      bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access
+      bullet bulletshell = bullets.get(i); // classname varname = arraylistname.get (method) paramater int // Assigns a shell object the same way objectforloop does it, but with a counter to keep track of which to access in case of removal from array
       PVector tmpBulletPos = bulletshell.position();
       // Check if its a child or adult asteroid, using the correct collision dection depending.
       if (enemyshell.selfScale == 1) {
         if (tmpEnemyPos[0]<tmpBulletPos.x && tmpEnemyPos[1]<tmpBulletPos.y && tmpEnemyPos[0]+100>tmpBulletPos.x && tmpEnemyPos[1]+95>tmpBulletPos.y) { // I hate this, it checks if the bullet is within the bounds of the enemies hitbox
-          //text(i+" "+x+"\n"+enemies.get(i),500,500);a
           enemies.remove(x);
-          enemies.add(new enemy(0, int(tmpBulletPos.x), int(tmpBulletPos.y)));
+          enemies.add(new enemy(0, int(tmpBulletPos.x), int(tmpBulletPos.y))); // Add children
           enemies.add(new enemy(0, int(tmpBulletPos.x), int(tmpBulletPos.y)));
           bullets.remove(i); // then delete the enemy
           enemiesKilled += 1;
@@ -63,7 +62,7 @@ void UpdateEnemies() {
 }
 
 PShape makeEnemyPS() {
-  // Declare enemy (May add more variants later)
+  // Declare enemy (May add more variants later) // never got round to it.
   PShape Enemy;
   Enemy = createShape();
   Enemy.beginShape();
@@ -83,7 +82,7 @@ PShape makeEnemyPS() {
   return Enemy;
 }
 
-ArrayList<enemy> enemies = new ArrayList<enemy>();
+ArrayList<enemy> enemies = new ArrayList<enemy>(); // An array of objects in memory used to store instances of the type enemy.
 class enemy {
   int[] selfPos;
   int[] movementVelocity;
@@ -102,16 +101,16 @@ class enemy {
       break;
     }
 
-    Enemy = makeEnemyPS();
+    Enemy = makeEnemyPS(); // Generate a PShape for the enemy and save it in the private attributes, means scale can be controlled per enemy.
     Enemy.scale(selfScale);
     Enemy.setFill(0);
     Enemy.setStroke(255);
     if (parentState == -1) {
-      selfPos = new int[] {int(random(environmentPos[0]-350, environmentPos[0]+350)), int(random(environmentPos[1]-350, environmentPos[1]+350))};
+      selfPos = new int[] {int(random(environmentPos[0]-350, environmentPos[0]+350)), int(random(environmentPos[1]-350, environmentPos[1]+350))}; // Spawn at a random location if its a new enemy
     } else {
-      selfPos = new int[] {parentX, parentY};
+      selfPos = new int[] {parentX, parentY}; // if its not a new enemy spawn it where its parent died
     }
-    //movementVelocity = new int[] {int(random(-5,5)),int(random(-5,5))};
+    //movementVelocity = new int[] {int(random(-5,5)),int(random(-5,5))}; // unused
     movementVelocity = new int[] {int(random(-enemyVelocity, enemyVelocity)), int(random(-enemyVelocity, enemyVelocity))};
   }
 
@@ -135,11 +134,8 @@ class enemy {
       selfPos[1] -= movementVelocity[0];
     }
 
-    //circle(environmentPos[0]-450, environmentPos[1], 10);
-    //circle(environmentPos[0]+450, environmentPos[1], 10);
-
-    shape(Enemy, selfPos[0], selfPos[1]);
-    if (debug) {
+    shape(Enemy, selfPos[0], selfPos[1]); // Draw the enemy in the right spot
+    if (debug) { // Debugging information.
       fill(0, 255, 0);
       stroke(255);
       textSize(14);
